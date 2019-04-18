@@ -42,7 +42,7 @@ app.get("/scrape", function (req, res) {
       })
      })
     res.send("scrape is complete")
-    // console.log(results);
+    console.log(results);
   })
 })
 
