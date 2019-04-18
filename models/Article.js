@@ -9,17 +9,21 @@ var ArticleSchema = new Schema({
   // 'name' must be of a type of string
   // 'name ' must be unique, the deafault mongoose error message is thrown if a dubplicate value is given
   title: {
+    unique: true,
     type: String,
     required: true
   },
   link: {
+    unique: true,
     type: String,
     required: true
   },
   description: {
+    unique: true,
     type: String,
   },
   image: {
+    unique: true,
     type: String,
   },
   favorited: {

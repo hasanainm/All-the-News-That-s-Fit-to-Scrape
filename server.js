@@ -4,17 +4,21 @@ const mongoose = require("mongoose");
 const cheerio = require("cheerio");
 const axios = require("axios");
 const logger = require("morgan");
+var hb = require("express-handlebars");
+
 
 const db = require("./models");
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 var app = express();
 
 app.use(logger("dev"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static("public"));
+// app.use(express.static("public"));
+app.engine("handlebars", hb({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
@@ -46,10 +50,10 @@ app.get("/scrape", function (req, res) {
   })
 })
 
-app.get("/articles", function(req, res){
+app.get("/", function(req, res){
     db.Article.find({})
     .then(function(dbArticle){
-        res.json(dbArticle);
+        res.render("index", {ScrapedArticles:dbArticle});
     })
     .catch(function(err){
         res.json(err);
